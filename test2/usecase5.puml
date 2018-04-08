@@ -1,0 +1,5 @@
+@startuml
+left to right direction
+图书管理员 --> (查询图书)
+(查询图书) <-- 读者
+@enduml

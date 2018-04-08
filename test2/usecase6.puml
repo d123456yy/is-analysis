@@ -1,0 +1,4 @@
+@startuml
+left to right direction
+读者 --> (查询借阅情况)
+@enduml
