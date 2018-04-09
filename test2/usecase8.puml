@@ -1,5 +1,0 @@
-@startuml
-left to right direction
-读者 --> (预定图书)
-(预定图书) .> (取消预定) : extends
-@enduml

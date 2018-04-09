@@ -63,8 +63,28 @@
 **“借出图书”用例流程图源码如下：**
 ``` usecase1
 @startuml
-left to right direction
-图书管理员 --> (借出图书)
+start
+:登录;
+:列出所有图书;
+:选择借出图书;
+if(是否有借出图书？) then (yes)
+:显示该图书信息;
+else (no)
+:提示不存在此图书;
+stop
+endif
+:借出图书;
+:填写借书单;
+:确认库存;
+if(是否有库存？) then (yes)
+:确认借书单;
+else (no)
+:提示此图书没有库存;
+stop
+endif
+:更新借书单;
+:更新图书库存;
+stop
 @enduml
 ```
 
@@ -90,8 +110,31 @@ left to right direction
 **“归还图书”用例流程图源码如下：**
 ``` usecase2
 @startuml
-left to right direction
-图书管理员 --> (归还图书)
+start
+:登录;
+:列出所有借书单;
+:选择归还图书的借书单;
+if(是否有该借书单？) then (yes)
+:显示该借书单信息;
+else (no)
+:提示不存在此借书单;
+stop
+endif
+:归还图书;
+if(归还是否超期？) then (yes)
+:开始扣费;
+stop
+else (no)
+:填写归还图书的数量;
+endif
+if(是否与借出数量相等？) then (yes)
+:更新借书单;
+else (no)
+:显示已归还x本;
+endif
+:确认借书单;
+:更新图书库存;
+stop
 @enduml
 ```
 
@@ -117,8 +160,26 @@ left to right direction
 **“维护书目”用例流程图源码如下：**
 ``` usecase3
 @startuml
-left to right direction
-图书管理员 --> (维护书目)
+start
+:登录;
+:列出所有图书;
+:选择所需要维护的图书;
+if(是否有维护图书？) then (yes)
+:显示该图书书目信息;
+else (no)
+:提示不存在该图书;
+stop
+endif
+:维护书目;
+if(是否有书目信息？) then (yes)
+:填写书目新信息;
+else (no)
+:提示该图书没有书目信息;
+stop
+endif
+:确认信息;
+:更新信息;
+stop
 @enduml
 ```
 
@@ -141,11 +202,24 @@ left to right direction
 |业务规则|
 |1.每个读者信息对应一位读者<br>2.每个读者信息应该包含读者的姓名、性别、年龄等信息，应能支持选择输入读者的姓名、性别、年龄等信息|
 
-**“维护读者新”用例流程图源码如下：**
+**“维护读者信息”用例流程图源码如下：**
 ``` usecase4
 @startuml
-left to right direction
-图书管理员 --> (维护读者信息)
+start
+:登录;
+:列出所有读者信息;
+:选择所需要维护的读者;
+if(是否有维护读者？) then (yes)
+:显示该读者信息;
+else (no)
+:提示不存在该读者;
+stop
+endif
+:维护读者;
+:填写读者新信息;
+:确认信息;
+:更新信息;
+stop
 @enduml
 ```
 
@@ -164,16 +238,32 @@ left to right direction
 |参与者动作|系统行为|
 |2.管理员、读者选择查询图书<br>4.管理员、读者输入所需要查询的图书<br>6.管理员、读者选择查看书目信息|1.系统给出查询图书的按钮<br>3.系统列出所有图书信息<br>5.系统显示所查询到的图书的所有信息<br>7.系统显示图书相对应的书目信息，用例结束|
 |备选事件流|
-|3a.没有该图书<br>&nbsp;&nbsp;&nbsp;&nbsp;1.系统提示不存在该图书，用例结束<br>4a.没有书目信息<br>&nbsp;&nbsp;&nbsp;&nbsp;1.系统提示不存在该书目信息，用例结束|
+|5a.没有该图书<br>&nbsp;&nbsp;&nbsp;&nbsp;1.系统提示不存在该图书，用例结束<br>7a.没有书目信息<br>&nbsp;&nbsp;&nbsp;&nbsp;1.系统提示不存在该书目信息，用例结束|
 |业务规则|
 |1.每次查询只能查询一本图书的书目<br>2.图书有书名、作者、ISBN、出版社等信息，应能支持选择输入图书书名、作者、ISBN、出版社等信息|
 
 **“查询书目”用例流程图源码如下：**
 ``` usecase5
 @startuml
-left to right direction
-图书管理员 --> (查询图书)
-(查询图书) <-- 读者
+start
+:登录;
+:给出查询图书按钮;
+:选择查询图书;
+:列出所有图书信息;
+:输入所需要查询的图书;
+if(是否有该图书？) then (yes)
+:显示该图书信息;
+else (no)
+:提示不存在该图书;
+stop
+endif
+:选择查看书目信息;
+if(是否有书目信息？) then (yes)
+:显示该图书书目信息;
+else (no)
+:提示该图书没有书目信息;
+endif
+stop
 @enduml
 ```
 
@@ -199,8 +289,23 @@ left to right direction
 **“查询借阅情况”用例流程图源码如下：**
 ``` usecase6
 @startuml
-left to right direction
-读者 --> (查询借阅情况)
+start
+:登录;
+:给出查询借阅情况按钮;
+:选择查询借阅情况;
+:列出所有借阅信息;
+if(是否存在借阅信息？) then (yes)
+:输入所需要查询的借阅信息;
+else (no)
+:提示不存在任何借阅信息;
+stop
+endif
+if(是否有此借阅信息？) then (yes)
+:显示该借阅信息;
+else (no)
+:提示不存在该借阅信息;
+endif
+stop
 @enduml
 ```
 
@@ -226,8 +331,26 @@ left to right direction
 **“预定图书”用例流程图源码如下：**
 ``` usecase7
 @startuml
-left to right direction
-读者 --> (预定图书)
+start
+:登录;
+:列出所有图书;
+:选择预定图书;
+if(是否有预定图书？) then (yes)
+:显示该图书信息;
+else (no)
+:提示不存在此图书;
+stop
+endif
+:预定图书;
+:填写预定单;
+if(图书是否全部借出？) then (yes)
+:图书已全部借出，不能进行预定;
+stop
+else (no)
+:确认预定信息;
+endif
+:保存预定单;
+stop
 @enduml
 ```
 
@@ -253,9 +376,20 @@ left to right direction
 **“取消预定”用例流程图源码如下：**
 ``` usecase8
 @startuml
-left to right direction
-读者 --> (预定图书)
-(预定图书) .> (取消预定) : extends
+start
+:登录;
+:列出所有预定单;
+:选择取消图书的预定单;
+if(是否有该预定单？) then (yes)
+:显示该预定单信息;
+else (no)
+:提示不存在此预定单;
+stop
+endif
+:取消预定;
+:确认预定单更新;
+:保存新的预定单;
+stop
 @enduml
 ```
 
@@ -281,11 +415,23 @@ left to right direction
 **“维护图书管理员”用例流程图源码如下：**
 ``` usecase9
 @startuml
-left to right direction
-超级管理员 --> (维护图书管理员信息)
+:登录;
+:列出所有图书管理员信息;
+:选择所需要维护的图书管理员;
+if(是否有维护图书管理员？) then (yes)
+:显示该图书管理员信息;
+else (no)
+:提示不存在此图书管理员;
+stop
+endif
+:维护图书管理员;
+:填写图书管理员新信息;
+:确认信息;
+:更新信息;
+stop
 @enduml
 ```
 
-**“预定图书”用例流程图如下：**
+**“维护图书管理员”用例流程图如下：**
 
 ![usecase](usecase9.png)

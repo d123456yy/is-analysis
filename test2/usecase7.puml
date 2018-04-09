@@ -1,4 +1,0 @@
-@startuml
-left to right direction
-读者 --> (预定图书)
-@enduml

@@ -1,4 +1,0 @@
-@startuml
-left to right direction
-超级管理员 --> (维护图书管理员信息)
-@enduml
