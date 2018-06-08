@@ -1,0 +1,7 @@
+@startuml
+title 基于GitHub的实验管理平台--修改选课信息用例的顺序图
+actor users
+users -> ChooseCourses: 查看选课信息
+ChooseCourses -> ChooseCourses:删除选课信息
+ChooseCourses --> users:删除之后的选课信息
+@enduml

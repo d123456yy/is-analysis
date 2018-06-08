@@ -1,0 +1,80 @@
+@startuml
+title 基于GitHub的实验管理平台--类图
+class users {
+    <b>user_id</b> （用户ID）
+    name （用户真实姓名）
+    github_username （用户GitHub账号）
+    update_date （用户GitHub账号修改日期）
+    password （用户密码）
+    disable （用户是否禁用）
+}
+class teachers{
+    <b>teacher_id</b> （老师工号）
+    department （老师所属部门）
+}
+class students{
+    <b>student_id</b> （学号）
+    class （班级）
+    result_sum（成绩汇总）
+    web_sum （网站正确与否汇总）
+}
+users <|- students
+users <|-- teachers
+class grades {
+    <b>student_id</b> （学号）
+    <b>test_id</b> （实验编号）
+    <b>grade_id</b> （实验成绩表编号）
+    result （总分，各评分项之和）
+    memo （评价）
+    update_date （评改日期）
+}
+class categories{
+    <b>categories_id</b> （评分项编号）
+    <b>grade_id</b> （实验成绩表编号）
+    name （评分项名称）
+    standard （评分项标准）
+    result （评分项分数）
+    memo （评价）
+    update_date （评改日期）
+}
+
+class tests {
+    <b>test_id</b> （实验编号）
+    <b>course_id</b> （课程编号）
+    title （实验名称）
+}
+class courses{
+    <b>course_id</b> （课程编号）
+    name （课程名字）
+    number  （课程数量）
+    rest  （课程剩余量）
+    begin （课程开始时间）
+    end （课程结束时间）
+    duration （课程时长）
+}
+class ChooseCourses{
+    <b>ChooseCourse_id</b> （选课信息编号）
+    <b>user_id</b> （选课用户：老师/学生）
+    <b>course_id</b> （课程信息编号）
+    date （选课日期）
+    status （课程状态：已开课/未开课）
+}
+
+class semester{
+    <b>semester_id</b> （学期编号）
+    <b>user_id</b> （用户：老师/学生）
+    <b>ChooseCourse_id</b> （选课信息编号）
+    <b>test_id</b> （实验编号）
+    <b>grades_id</b> （实验成绩表编号）
+    name （学期名称）
+    begin （学期开始时间）
+    end（学期结束时间）
+}
+
+students "1" -- "n"  grades
+tests "1" -- "n"  grades
+users "1" --"*"  ChooseCourses
+users "n" --"n"  semester:查看
+grades "1" --"1..*" categories:使用
+ChooseCourses "*" --"1" courses
+@enduml

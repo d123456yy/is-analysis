@@ -1,0 +1,17 @@
+@startuml
+title 基于GitHub的实验管理平台--选课用例的顺序图
+actor users
+users -> courses: 查看所有课程信息
+alt 如果users是老师
+	courses -> ChooseCourse:选择课程，生成选课信息
+	ChooseCourse -> users:选课信息和课程详细信息
+else 如果users是students
+    alt 如果老师开课
+       courses -> ChooseCourse:选择课程，生成选课信息
+       ChooseCourse -> users:选课信息和课程详细信息
+    else 如果老师未开课
+       courses -> users: 返回课程信息并提示：老师未开课，暂不能选择
+    end
+end
+
+@enduml

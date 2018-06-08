@@ -1,0 +1,6 @@
+@startuml
+title 基于GitHub的实验管理平台--查看学期信息用例的顺序图
+actor users
+users -> semester: 查看学期信息
+semester -> users: 以前学期的详细信息
+@enduml
